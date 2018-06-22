@@ -3,9 +3,14 @@
 let express = require("express");
 let app = express();
 
+// object for working with cookies
+let cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // prohibit cache
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     next();
 });
@@ -79,8 +84,48 @@ app.get('/:xxx/:yyy', function(request, response) {
         }
     }
 
+    // add new cookies and rewrite old cookies
+    if(xxx === "addcookies") {
+        for(let key in dictionary) {
+            const value = dictionary[key];
+            setMyCookie(response, key, value);
+        }
+
+        response.status(200);
+        response.end("ADD_COOKIES_OK");
+        return;
+    }
+
+    // get list of existing cookies
+    if(xxx === "getcookies") {
+        const content = getCookiesString(request.cookies);
+        console.log("Cookies content: " + content);
+        response.status(200);
+        response.end(content.toString());
+        return;
+    }
+
     // send not found
     response.status(200);
     response.end("RESULT_NOT_FOUND");
 });
 
+
+// cookie functions
+
+const bigNumber = 999999999999;
+
+function setMyCookie(response, key, value) {
+    response.cookie(key, value, {
+        expires: new Date(Date.now() + bigNumber),
+        path: "/",
+    });
+}
+
+function getCookiesString(cookies) {
+    let contentString = "";
+    for(let key in cookies) {
+        contentString = contentString + key + "=" + cookies[key] + ";";
+    }
+    return contentString;
+}

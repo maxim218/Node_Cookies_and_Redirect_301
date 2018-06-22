@@ -9,5 +9,52 @@
 
 <h1>Page ONE</h1>
 
+<p>Введите переменные для URL:</p>
+<input type = "text" size = "50" spellcheck = 'false' autocomplete = 'off' id = "field">
+<button id = "btn">Отправить</button>
+
+<br>
+<br>
+
+<button id = "btnTwo">Получить список печенек</button>
+
+<script>
+    function getMethod(urlParam, callback) {
+        const url = urlParam.toString();
+        console.log("-------------------------------------------------");
+        console.log("Method: GET");
+        console.log("Url: " + url);
+        let r = new XMLHttpRequest();
+        r.withCredentials = true;
+        r.open("GET", url, true);
+        r.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
+        r.send(null);
+        r.onreadystatechange = function() {
+            if(r.readyState === 4 && r.status === 200) {
+                callback(r.responseText.toString());
+            }
+        }
+    }
+
+    window.onload = function() {
+        const btn = document.getElementById("btn");
+        const field = document.getElementById("field");
+        const btnTwo = document.getElementById("btnTwo");
+
+        btnTwo.onclick = function() {
+          getMethod("/getcookies/rnd/", (result) => {
+              alert(result);
+          });
+        };
+
+        btn.onclick = function() {
+            const value = field.value;
+            getMethod("/addcookies/rnd/?" + value.toString(), (result) => {
+                console.log("Result: " + result);
+            });
+        };
+    };
+</script>
+
 </body>
 </html>
