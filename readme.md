@@ -1,4 +1,4 @@
-#Тестирование: redirect (301), разбор URL, Cookies
+# Тестирование: redirect (301), разбор URL, Cookies
 
 Загрузка страниц:
 1) http://localhost:5001/page/1
