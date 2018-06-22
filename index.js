@@ -36,6 +36,33 @@ app.get('/:xxx/:yyy', function(request, response) {
     console.log("Part one: " + xxx);
     console.log("Part two: " + yyy);
 
+    // route pages html
+    if(xxx === "page") {
+        if(parseInt(yyy) === 1) {
+            response.sendfile("static/pageFirst.html");
+            return;
+        }
+
+        if(parseInt(yyy) === 2) {
+            response.sendfile("static/pageSecond.html");
+            return;
+        }
+    }
+
+    // route styles css
+    if(xxx === "style") {
+        if(yyy === "first") {
+            response.sendfile("static/cssONE.css");
+            return;
+        }
+
+        if(yyy === "second") {
+            response.sendfile("static/cssTWO.css");
+            return;
+        }
+    }
+
+
     // send not found
     response.status(200);
     response.end("RESULT_NOT_FOUND");
