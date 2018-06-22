@@ -62,6 +62,22 @@ app.get('/:xxx/:yyy', function(request, response) {
         }
     }
 
+    // redirect to other page
+    if(xxx === "movepage") {
+        if(parseInt(yyy) === 1) {
+            response.header("Location", "/page/1");
+            response.status(301);
+            response.end("GO");
+            return;
+        }
+
+        if(parseInt(yyy) === 2) {
+            response.header("Location", "/page/2");
+            response.status(301);
+            response.end("GO");
+            return;
+        }
+    }
 
     // send not found
     response.status(200);
