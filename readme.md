@@ -9,5 +9,6 @@
 2) http://localhost:5001/movepage/2
 
 Пример ввода в текстовое поле:
+1) xx=12&amp;yy=45&amp;zz=maxim
+2) abcd=12345
 
-xx=12&amp;yy=45&amp;zz=maxim
